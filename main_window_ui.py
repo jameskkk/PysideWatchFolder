@@ -50,6 +50,13 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addWidget(self.select_button)
 
+        self.fetch_button = QPushButton(self.centralwidget)
+        self.fetch_button.setObjectName(u"fetch_button")
+        sizePolicy1.setHeightForWidth(self.fetch_button.sizePolicy().hasHeightForWidth())
+        self.fetch_button.setSizePolicy(sizePolicy1)
+
+        self.verticalLayout.addWidget(self.fetch_button)
+
         self.folder_label = QLabel(self.centralwidget)
         self.folder_label.setObjectName(u"folder_label")
         self.folder_label.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignTop)
@@ -71,8 +78,8 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.setStretch(0, 1)
         self.verticalLayout.setStretch(1, 1)
-        self.verticalLayout.setStretch(2, 2)
-        self.verticalLayout.setStretch(3, 3)
+        self.verticalLayout.setStretch(3, 2)
+        self.verticalLayout.setStretch(4, 3)
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -84,6 +91,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Watch Folder", None))
         self.select_folder_label.setText(QCoreApplication.translate("MainWindow", u"Select a directory to monitor: ", None))
         self.select_button.setText(QCoreApplication.translate("MainWindow", u"Select Directory", None))
+        self.fetch_button.setText(QCoreApplication.translate("MainWindow", u"Fetch Data", None))
         self.folder_label.setText(QCoreApplication.translate("MainWindow", u"No directory selected.", None))
         self.status_label.setText(QCoreApplication.translate("MainWindow", u"Not monitoring...", None))
     # retranslateUi
