@@ -1,4 +1,5 @@
 import sys
+import time
 from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QPushButton, QLabel, QFileDialog
 from PySide6.QtCore import Qt, QThread, Signal, QObject
 from PySide6.QtGui import QIcon, QCloseEvent
@@ -13,16 +14,24 @@ class DirectoryEventHandler(QObject, FileSystemEventHandler):
 
     def __init__(self):
         super().__init__()
+        self.created_files = {}  # 用來記錄剛剛被創建的檔案
 
     def on_modified(self, event):
         if event.is_directory:
             return
+        # 檢查檔案是否剛被創建過，若是則忽略此事件
+        if event.src_path in self.created_files:
+            # 若創建在1秒內，視為重複事件，不處理
+            if time.time() - self.created_files[event.src_path] < 1:
+                return
         print(f"檔案已修改: {event.src_path}")
         self.file_changed.emit(f"File modified: {event.src_path}")
 
     def on_created(self, event):
         if event.is_directory:
             return
+        # 記錄創建時間
+        self.created_files[event.src_path] = time.time()
         print(f"檔案已創建: {event.src_path}")
         self.file_changed.emit(f"File created: {event.src_path}")
 
