@@ -2,6 +2,7 @@ import sys
 import time
 import requests
 import logging
+from logging.handlers import RotatingFileHandler
 from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QPushButton, QLabel, QFileDialog
 from PySide6.QtCore import Qt, QThread, Signal, QObject
 from PySide6.QtGui import QIcon, QCloseEvent
@@ -94,7 +95,8 @@ class FileWatcherApp(QMainWindow):
         self.ui.fetch_button.clicked.connect(self.fetch_data_event)
 
         self.directory_watcher = None
-
+        logging.warning(f"Initializer App finished!")
+        
     def init_layout(self):
         self.setWindowTitle("Directory Watcher")
 
@@ -120,10 +122,16 @@ class FileWatcherApp(QMainWindow):
 
     def init_log(self):
         # 配置Logging，將日誌輸出到檔案
-        log_handler = logging.FileHandler("app.log", mode="a", encoding="utf-8")
-        log_handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)-8s - %(message)s"))
+        # log_handler = logging.FileHandler("app.log", mode="a", encoding="utf-8")
+        # log 達到5MB後會自動Rollback
+        log_handler = RotatingFileHandler("app.log", maxBytes=5 * 1024 * 1024, backupCount=5, encoding="utf-8")
+        log_handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)-7s - %(message)s"))
         logging.getLogger().addHandler(log_handler)
         logging.getLogger().setLevel(logging.DEBUG)
+
+        # Log test
+        # for i in range(1000):
+        #         logging.info(f"Log entry {i}")
 
     def select_directory_event(self):
         # self.fetch_data()
