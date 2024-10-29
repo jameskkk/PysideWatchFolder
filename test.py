@@ -37,3 +37,10 @@ if __name__ == "__main__":
     directory_to_watch = "D:/CA_Project/CP/CPSourceCode/PySide/SerialTool/TestFolder"
     watcher = Watcher(directory_to_watch)
     watcher.run()
+
+    # t = ['x', 'A', 'k', 'y', 's', 'u', 'm', 'd', 'c', 'e', 'i', 'l', ' ', ',']
+    # indices = [1, 11, 9, 0, 13, 4, 5, 8, 2, 12, 6, 3, 12, 7, 10, 8, 2]
+    # result = "".join([t[i] for i in indices])
+    # print(result)
+
+
